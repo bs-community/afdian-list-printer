@@ -1,0 +1,6 @@
+account = "account name on afdian.net"
+password = "password of your account"
+amount = 0.0  # 0.0 means no need to split into sponsors and backers
+target_files = [
+    "path to your markdown file",
+]

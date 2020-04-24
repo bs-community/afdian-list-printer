@@ -1,0 +1,14 @@
+[package]
+name = "afdian-list-printer"
+version = "0.1.0"
+authors = ["Pig Fang <g-plane@hotmail.com>"]
+edition = "2018"
+
+[dependencies]
+anyhow = "1.0"
+handlebars = "3.1.0-beta.2"
+regex = "1.3"
+reqwest = { version = "0.10", features = ["gzip", "json"] }
+serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "0.2", features = ["macros", "fs"] }
+toml = "0.5"
