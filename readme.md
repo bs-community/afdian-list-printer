@@ -17,4 +17,4 @@ Last, just run this program.
 
 MIT License
 
-Copyright (c) 2016-present The Blessing Skin Team
+Copyright (c) 2020-present The Blessing Skin Team
