@@ -6,13 +6,12 @@ pub async fn login<'a>(account: Cow<'a, str>, password: Cow<'a, str>) -> Result<
     let client = ClientBuilder::new().user_agent("Firefox/75.0").build()?;
     let req = LoginRequest::new().account(account).password(password);
 
-    let resp = client
+    client
         .post("https://afdian.net/api/passport/login")
         .json(&req)
         .send()
         .await?
         .json::<Response<LoginResponse>>()
-        .await?;
-
-    Ok(resp.data.auth_token)
+        .await
+        .map(|resp| resp.data.auth_token)
 }

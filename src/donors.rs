@@ -6,16 +6,14 @@ use tera::{Context as TeraContext, Result as TeraResult, Tera};
 
 pub async fn fetch(token: &str) -> Result<Vec<Donor>, Error> {
     let client = ClientBuilder::new().user_agent("Firefox/75.0").build()?;
-    let dashboard = client
+    client
         .get("https://afdian.net/api/my/dashboard")
         .header("Cookie", format!("auth_token={}", token))
         .send()
         .await?
         .json::<Response<Dashboard>>()
-        .await?
-        .data;
-
-    Ok(dashboard.sponsored_history)
+        .await
+        .map(|resp| resp.data.sponsored_history)
 }
 
 pub fn render_sponsors(donors: Vec<Donor>) -> TeraResult<String> {
