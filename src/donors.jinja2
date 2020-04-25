@@ -1,0 +1,15 @@
+<table>
+  <tbody>
+    <tr>
+      {% for user in users -%}
+      <td align=center>
+        <a href="{{ user.url_slug }}">
+          <img src="{{ user.avatar }}" width="{{ avatar_size }}" height="{{ avatar_size }}">
+          <br>
+          {{ user.name }}
+        </a>
+      </td>
+      {% endfor -%}
+    </tr>
+  </tbody>
+</table>

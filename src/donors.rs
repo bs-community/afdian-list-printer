@@ -1,8 +1,8 @@
 use crate::types::{Dashboard, Donor, Response, User};
-use handlebars::{Handlebars, TemplateRenderError};
 use reqwest::{ClientBuilder, Error};
 use serde::Serialize;
 use std::collections::BTreeSet;
+use tera::{Tera, Result as TeraResult, Context as TeraContext};
 
 pub async fn fetch(token: &str) -> Result<Vec<Donor>, Error> {
     let client = ClientBuilder::new().user_agent("Firefox/75.0").build()?;
@@ -18,25 +18,23 @@ pub async fn fetch(token: &str) -> Result<Vec<Donor>, Error> {
     Ok(dashboard.sponsored_history)
 }
 
-pub fn render_sponsors(donors: Vec<Donor>) -> Result<String, TemplateRenderError> {
+pub fn render_sponsors(donors: Vec<Donor>) -> TeraResult<String> {
     render(donors, 120)
 }
 
-pub fn render_backers(donors: Vec<Donor>) -> Result<String, TemplateRenderError> {
+pub fn render_backers(donors: Vec<Donor>) -> TeraResult<String> {
     render(donors, 75)
 }
 
-fn render(donors: Vec<Donor>, avatar_size: i16) -> Result<String, TemplateRenderError> {
+fn render(donors: Vec<Donor>, avatar_size: i16) -> TeraResult<String> {
     let backers = extract_users(donors);
 
-    let template = include_str!("donors.hbs");
-    let hbs = Handlebars::new();
+    let template = include_str!("donors.jinja2");
     let context = Context {
         avatar_size,
         users: backers,
     };
-
-    hbs.render_template(&template, &context)
+    Tera::one_off(template, &TeraContext::from_serialize(context)?, false)
 }
 
 #[derive(Serialize)]
