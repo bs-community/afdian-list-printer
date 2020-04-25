@@ -2,7 +2,7 @@ use crate::types::{Dashboard, Donor, Response, User};
 use reqwest::{ClientBuilder, Error};
 use serde::Serialize;
 use std::collections::BTreeSet;
-use tera::{Tera, Result as TeraResult, Context as TeraContext};
+use tera::{Context as TeraContext, Result as TeraResult, Tera};
 
 pub async fn fetch(token: &str) -> Result<Vec<Donor>, Error> {
     let client = ClientBuilder::new().user_agent("Firefox/75.0").build()?;
