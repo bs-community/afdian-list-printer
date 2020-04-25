@@ -58,5 +58,5 @@ fn extract_users(donors: Vec<Donor>) -> BTreeSet<User> {
 
             user
         })
-        .collect::<BTreeSet<_>>()
+        .collect()
 }

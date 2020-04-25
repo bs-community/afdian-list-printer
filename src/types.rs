@@ -38,7 +38,7 @@ pub struct LoginResponse {
     pub auth_token: String,
 }
 
-#[derive(Deserialize, Serialize, Debug, Hash, Eq, PartialEq, Ord, PartialOrd)]
+#[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Ord, PartialOrd)]
 pub struct User {
     pub user_id: String,
     pub name: String,
