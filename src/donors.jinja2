@@ -1,7 +1,8 @@
 <table>
   <tbody>
+    {% for chunk in users -%}
     <tr>
-      {% for user in users -%}
+      {% for user in chunk -%}
       <td align=center>
         <a href="{{ user.url_slug }}">
           <img src="{{ user.avatar }}" width="{{ avatar_size }}" height="{{ avatar_size }}">
@@ -11,5 +12,6 @@
       </td>
       {% endfor -%}
     </tr>
+    {% endfor -%}
   </tbody>
 </table>

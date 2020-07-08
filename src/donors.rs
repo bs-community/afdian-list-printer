@@ -25,20 +25,20 @@ pub fn render_backers(donors: Vec<Donor>) -> TeraResult<String> {
 }
 
 fn render(donors: Vec<Donor>, avatar_size: i16) -> TeraResult<String> {
-    let backers = extract_users(donors);
+    let donors = extract_users(donors).into_iter().collect::<Vec<_>>();
 
     let template = include_str!("donors.jinja2");
     let context = Context {
         avatar_size,
-        users: backers,
+        users: donors.chunks(5).collect::<Vec<_>>(),
     };
     Tera::one_off(template, &TeraContext::from_serialize(context)?, false)
 }
 
 #[derive(Serialize)]
-struct Context {
+struct Context<'a> {
     avatar_size: i16,
-    users: BTreeSet<User>,
+    users: Vec<&'a [User]>,
 }
 
 fn extract_users(donors: Vec<Donor>) -> BTreeSet<User> {
